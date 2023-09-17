@@ -1,5 +1,5 @@
 import ballerina/io;
 
-public function main() {
-    io:println("Hello, World!");
+public function Main() {
+    io:println("Hello, and welcome to our DSA Project!");
 }
