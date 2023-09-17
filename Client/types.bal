@@ -67,7 +67,7 @@ public type Lecturer_courses record {
     string nqfLevel?;
 };
 
-public type Lecturer record {
+public type Lecturer1 record {
     string staffNumber?;
     string officeNumber?;
     string staffName?;
