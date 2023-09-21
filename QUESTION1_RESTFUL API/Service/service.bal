@@ -1,5 +1,12 @@
 import ballerina/http;
+type LecturerDetails readonly &record {
+    string Staffname  ;
+    string title ;
+    string staffnum ;
+    string officenum ;
+string[] courses;
 
+};
 # A service representing a network-accessible API
 # bound to port `9090`.
 service / on new http:Listener(9090) {
