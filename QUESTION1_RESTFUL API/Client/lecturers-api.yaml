@@ -1,0 +1,253 @@
+openapi: "3.0.1"
+
+info:
+  title: FCI_Management Yaml
+  version: "0.0.1"
+
+servers:
+- url: http://localhost:8080/vle/api/v1
+  
+paths:
+  
+  /createLecturer:
+    post:
+      summary: Insert a new Lecturer
+      operationId: postCreatelecturer
+      description: Add a new lecturer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LecturerInfo'
+      responses:
+        "201":
+          description: User successfully Created
+          content:
+            text/plain:
+              schema:
+                type: string
+        "500":
+          description: There was a problem adding the lecturer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorPayload'
+
+
+  /updateLecturer:
+    put:
+      summary: Update an existing lecturer
+      operationId: putUpdatelecturer
+      description: Update an existing lecturer's information
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LecturerInfo'
+      responses:
+        "200":
+          description: Ok
+          content:
+            text/plain:
+              schema:
+                type: string
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorPayload'
+
+
+  /deleteLecturerByStaffNo/{staffNumber}:
+    delete:
+      summary: Delete an existing Lecturer by their staff number
+      operationId: deleteDeletelecturerbystaffnoStaffnumber
+      description: Delete a lecturer's record by their staff number
+      parameters:
+      - name: staffNumber
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Lecturer successfully deleted
+          content:
+            text/plain:
+              schema:
+                type: string
+        "500":
+          description: There was a problem delete the lecturer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorPayload'
+
+  
+  /retrieveLecturerById/{staffNumber}:
+    get:
+      summary: Get a lecturer by staff number
+      operationId: getRetrievelecturerbyidStaffnumber
+      description: Retrieve the details of a specific lecturer by their staff number
+      parameters:
+      - name: staffNumber
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LecturerInfo'
+
+
+  /retrieveLecturerByCourse:
+    get:
+      summary: Get all lecturers that teach a certain course
+      operationId: getRetrievelecturerbycourse
+      description: Retrieve all the lecturers that teach a certain course
+      responses:
+        "200":
+          description: Ok
+          content:
+            text/plain:
+              schema:
+                type: string
+        "500":
+          description: There was a problem Retrieving lecturers by course
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorPayload'
+
+
+  /retrieveAlllecturers:
+   get:
+    summary: Get all lecturers
+    operationId: getRetrieveAlllecturer
+    description: Retrieve a list of all lecturers within the faculty
+    responses:
+        "200":
+          description: Ok
+          content:
+            text/plain:
+              schema:
+                type: string
+        "500":
+          description: There was a problem Retrieving all Lecturers
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorPayload'
+                
+
+  /retrieveLecturerByOfficeNo:
+    get:
+      summary: Get all lecturers that seat in the same office
+      operationId: getRetrievelecturerbyofficeno
+      description: Retrieve all the lecturers that sit in the same office
+      responses:
+        "200":
+          description: Ok
+          content:
+            text/plain:
+              schema:
+                type: string
+        "500":
+          description: There was a problem Retrieving all lecturers that seat in the same office
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorPayload'
+components:
+  schemas:
+    LecturerInfo:
+      required:
+      - courseCode
+      - officeNumber
+      - staffName
+      - staffNumber
+      - staffTitle
+      type: object
+      properties:
+        staffNumber:
+          type: string
+        staffName:
+          type: string
+        staffTitle:
+          type: string
+        courseCode:
+          type: string
+        officeNumber:
+          type: string
+    ErrorPayload:
+      type: object
+      properties:
+        reason:
+          type: string
+          description: Reason phrase
+        path:
+          type: string
+          description: Request path
+        method:
+          type: string
+          description: Method type of the request
+        message:
+          type: string
+          description: Error message
+        timestamp:
+          type: string
+          description: Timestamp of the error
+        status:
+          type: integer
+          description: Relevant HTTP status code
+          format: int32
+    AddCourseInfo:
+      required:
+      - courseCode
+      - courseId
+      - staffNumber
+      type: object
+      properties:
+        courseId:
+          type: string
+        staffNumber:
+          type: string
+        courseCode:
+          type: string
+    AddLecturerInfo:
+      required:
+      - courseCode
+      - lecturerId
+      - officeNumber
+      - staffNumber
+      type: object
+      properties:
+        lecturerId:
+          type: string
+        staffNumber:
+          type: string
+        courseCode:
+          type: string
+        officeNumber:
+          type: string
+    CourseInfo:
+      required:
+      - courseCode
+      - courseDepartment
+      - courseName
+      - courseNqaLevel
+      type: object
+      properties:
+        courseCode:
+          type: string
+        courseName:
+          type: string
+        courseNqaLevel:
+          type: string
+        courseDepartment:
+          type: string
